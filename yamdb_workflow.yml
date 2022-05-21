@@ -19,12 +19,10 @@ jobs:
         pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
         cd api_yamdb/
         pip install -r requirements.txt
-
     - name: Test with flake8 and django tests
       run: |
-        python -m flake8
         pytest
-
+        python -m flake8
   build_and_push_to_docker_hub:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
@@ -43,7 +41,8 @@ jobs:
         uses: docker/build-push-action@v2 
         with:
           push: true
-          tags: ascurse/yamdb_final:latest
+          tags: ascurse/yamdb_final
+          file: ./api_yamdb/Dockerfile
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
@@ -56,6 +55,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
+            cd ascurse/
             sudo docker-compose stop
             sudo docker-compose rm web
             touch .env
