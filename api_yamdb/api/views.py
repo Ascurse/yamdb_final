@@ -87,7 +87,6 @@ class UserViewSet(viewsets.ModelViewSet):
                     )
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_200_OK)
-        return False
 
     def perform_create(self, serializer):
         rd = self.request.data
