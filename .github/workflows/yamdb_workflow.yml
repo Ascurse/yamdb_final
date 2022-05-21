@@ -32,7 +32,7 @@ jobs:
     needs: tests
     steps:
       - run: |
-          cd api_yamdb/
+          ls
       - name: Check out the repo
         uses: actions/checkout@v2 
       - name: Set up Docker Buildx
