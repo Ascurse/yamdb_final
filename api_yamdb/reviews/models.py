@@ -1,19 +1,15 @@
-import jwt
 import logging
 import sys
 
-from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.core.validators import (
-    MaxValueValidator,
-    MinValueValidator,
-    RegexValidator
-)
-from django.db import models
-from rest_framework_simplejwt.tokens import AccessToken
-
+import jwt
 from api.methods import text_processor
 from api.validators import validate_year
 from api_yamdb.settings import SECRET_KEY
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.core.validators import (MaxValueValidator, MinValueValidator,
+                                    RegexValidator)
+from django.db import models
+from rest_framework_simplejwt.tokens import AccessToken
 
 formatter = logging.Formatter(
     '%(asctime)s %(levelname)s %(message)s - строка %(lineno)s'

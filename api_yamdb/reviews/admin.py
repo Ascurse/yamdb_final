@@ -1,9 +1,9 @@
+from api.serializers import logger
+from api_yamdb.settings import EMPTY_VALUE
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from api_yamdb.settings import EMPTY_VALUE
-from api.serializers import logger
-from .models import Category, Comment, Genre, Review, Title, CustomUser
+from .models import Category, Comment, CustomUser, Genre, Review, Title
 
 
 @admin.register(CustomUser)

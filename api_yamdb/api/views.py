@@ -5,13 +5,7 @@ from django.core.mail import send_mail
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-
-from rest_framework import (
-    filters,
-    permissions,
-    status,
-    viewsets
-)
+from rest_framework import filters, permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -21,23 +15,13 @@ from reviews.models import Category, CustomUser, Genre, Review, Title
 
 from .filters import TitlesFilter
 from .methods import get_user_role
-from .permissions import (
-    IsAdminOrReadOnly,
-    IsAdminModeratorUserPermission,
-    IsAdminUserCustom,
-)
-from .serializers import (
-    CategorySerializer,
-    CommentSerializer,
-    CustomUserSerializer,
-    GenreSerializer,
-    MyTokenObtainSerializer,
-    ReviewSerializer,
-    SignUpSerializer,
-    TitleCreateSerializer,
-    TitleSerializer,
-)
-
+from .permissions import (IsAdminModeratorUserPermission, IsAdminOrReadOnly,
+                          IsAdminUserCustom)
+from .serializers import (CategorySerializer, CommentSerializer,
+                          CustomUserSerializer, GenreSerializer,
+                          MyTokenObtainSerializer, ReviewSerializer,
+                          SignUpSerializer, TitleCreateSerializer,
+                          TitleSerializer)
 
 formatter = logging.Formatter(
     '%(asctime)s %(levelname)s %(message)s - строка %(lineno)s'
@@ -65,6 +49,7 @@ class UserViewSet(viewsets.ModelViewSet):
         if self.suffix == 'users-list' or 'user-detail':
             logger.debug('Запущен эндпойнт users-list или user-detail')
             return (IsAdminUserCustom(),)
+        return False
 
     @action(detail=True, url_path='me', methods=['get', 'patch'])
     def getme(self, request):
@@ -102,6 +87,7 @@ class UserViewSet(viewsets.ModelViewSet):
                     )
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_200_OK)
+        return False
 
     def perform_create(self, serializer):
         rd = self.request.data
