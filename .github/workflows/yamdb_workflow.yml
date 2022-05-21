@@ -19,7 +19,6 @@ jobs:
         pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
         cd api_yamdb/
         pip install -r requirements.txt
-        cd ..
 
     - name: Test with flake8 and django tests
       run: |
@@ -31,8 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: tests
     steps:
-      - run: |
-          ls
       - name: Check out the repo
         uses: actions/checkout@v2 
       - name: Set up Docker Buildx
@@ -46,7 +43,7 @@ jobs:
         uses: docker/build-push-action@v2 
         with:
           push: true
-          tags: ascurse/yamdb_final:latest
+          tags: ascurse/yamdb_final:v2
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
